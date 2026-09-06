@@ -33,7 +33,15 @@ export class MockApiService {
     this.http.get<Expense[]>(`${this.baseUrl}/expenses`).pipe(map(items => items.map(this.normalizeExpense))).subscribe(items => this.expenses$.next(items));
   }
 
-  addMinorCategory(majorCategoryId: number, name: string): Observable<MinorCategory> {
+  addMajorCategory(name: string): Observable<MajorCategory> {
+    const payload = { name: name.trim(), icon: '✦', accent: 'blue' };
+    return this.http.post<MajorCategory>(`${this.baseUrl}/majorCategories`, payload).pipe(
+      map(this.normalizeMajor),
+      tap(category => this.major$.next([...this.major$.value, category]))
+    );
+  }
+
+addMinorCategory(majorCategoryId: number, name: string): Observable<MinorCategory> {
   const nextId =
     this.minor$.value.reduce(
       (max, item) => Math.max(max, Number(item.id) || 0),
@@ -55,13 +63,6 @@ export class MockApiService {
   );
 }
 
-  addMinorCategory(majorCategoryId: number, name: string): Observable<MinorCategory> {
-    const payload = { majorCategoryId, name: name.trim() };
-    return this.http.post<MinorCategory>(`${this.baseUrl}/minorCategories`, payload).pipe(
-      map(this.normalizeMinor),
-      tap(category => this.minor$.next([...this.minor$.value, category]))
-    );
-  }
 
   addExpense(request: ExpenseRequest): Observable<Expense> {
     const payload = {
