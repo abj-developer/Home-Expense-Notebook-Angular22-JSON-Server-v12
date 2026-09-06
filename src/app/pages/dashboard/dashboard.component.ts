@@ -56,12 +56,12 @@ export class DashboardComponent {
     if (this.expenseForm.invalid) { this.expenseForm.markAllAsTouched(); return; }
     this.saving = true; this.message = '';
     const formValue = this.expenseForm.getRawValue();
-    const request = {
-      ...formValue,
-      majorCategoryId: Number(formValue.majorCategoryId),
-      minorCategoryId: Number(formValue.minorCategoryId),
-      amount: Number(formValue.amount)
-    };
+   const request = {
+  ...formValue,
+  majorCategoryId: Number(formValue.majorCategoryId),
+  minorCategoryId: String(formValue.minorCategoryId),
+  amount: Number(formValue.amount)
+};
     this.api.addExpense(request).subscribe(() => {
       this.saving = false; this.message = 'Expense added successfully.';
       this.expenseForm.controls.amount.setValue(0); this.expenseForm.controls.description.setValue('');

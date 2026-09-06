@@ -41,28 +41,32 @@ export class MockApiService {
     );
   }
 
-addMinorCategory(majorCategoryId: number, name: string): Observable<MinorCategory> {
-  const nextId =
-    this.minor$.value.reduce(
-      (max, item) => Math.max(max, Number(item.id) || 0),
-      0
-    ) + 1;
-  const payload = {
-    id: nextId,
-    majorCategoryId: Number(majorCategoryId),
-    name: name.trim()
-  };
-  return this.http.post<MinorCategory>(
+addMinorCategory(
+  majorCategoryId: number,
+  name: string
+): Observable<MinorCategory> {
+
+const payload = {
+  majorCategoryId: Number(request.majorCategoryId),
+  minorCategoryId: String(request.minorCategoryId),
+  amount: Number(request.amount),
+  date: request.date,
+  description: request.description ?? ''
+};
+
+  return this.http.post<MinorCategory>(;
     `${this.baseUrl}/minorCategories`,
     payload
   ).pipe(
     map(this.normalizeMinor),
     tap(category =>
-      this.minor$.next([...this.minor$.value, category])
+      this.minor$.next([
+        ...this.minor$.value,
+        category
+      ])
     )
   );
 }
-
 
   addExpense(request: ExpenseRequest): Observable<Expense> {
     const payload = {
@@ -76,11 +80,22 @@ addMinorCategory(majorCategoryId: number, name: string): Observable<MinorCategor
       map(this.normalizeExpense),
       tap(expense => this.expenses$.next([expense, ...this.expenses$.value]))
     );
-  }
+  }2
 
   private normalizeMajor = (item: MajorCategory): MajorCategory => ({ ...item, id: Number(item.id) });
-  private normalizeMinor = (item: MinorCategory): MinorCategory => ({ ...item, id: Number(item.id), majorCategoryId: Number(item.majorCategoryId) });
-  private normalizeExpense = (item: Expense): Expense => ({ ...item, id: Number(item.id), majorCategoryId: Number(item.majorCategoryId), minorCategoryId: Number(item.minorCategoryId), amount: Number(item.amount) });
+ private normalizeExpense = (item: Expense): Expense => ({
+  ...item,
+  id: Number(item.id),
+  majorCategoryId: Number(item.majorCategoryId),
+  minorCategoryId: String(item.minorCategoryId),
+  amount: Number(item.amount)
+});
+ 
+  private normalizeMinor = (item: MinorCategory): MinorCategory => ({
+  ...item,
+  id: String(item.id),
+  majorCategoryId: Number(item.majorCategoryId)
+});
 
   private currentMonthKey(): string {
     const now = new Date();
