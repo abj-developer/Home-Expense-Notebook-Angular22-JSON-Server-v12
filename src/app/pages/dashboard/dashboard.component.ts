@@ -14,7 +14,7 @@ export class DashboardComponent {
   readonly minorCategories = toSignal(this.api.getMinorCategories(), { initialValue: [] as MinorCategory[] });
   readonly expenses = toSignal(this.api.getExpenses(), { initialValue: [] as Expense[] });
   readonly expenseForm = this.fb.nonNullable.group({
-    majorCategoryId: [2, Validators.required], minorCategoryId: [201, Validators.required], amount: [0, [Validators.required, Validators.min(1)]],
+    majorCategoryId: [2, Validators.required], minorCategoryId: ['201', Validators.required], amount: [0, [Validators.required, Validators.min(1)]],
     date: [this.today(), Validators.required], description: ['']
   });
   readonly selectedMajorId = signal(2);
@@ -48,7 +48,7 @@ export class DashboardComponent {
     this.expenseForm.controls.majorCategoryId.valueChanges.subscribe(majorId => {
       this.selectedMajorId.set(Number(majorId));
       const firstMinor = this.minorCategories().find(m => m.majorCategoryId === Number(majorId));
-      this.expenseForm.controls.minorCategoryId.setValue(firstMinor?.id ?? 0);
+      this.expenseForm.controls.minorCategoryId.setValue(firstMinor?.id ?? '');
     });
   }
 
