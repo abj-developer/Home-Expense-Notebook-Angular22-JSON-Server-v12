@@ -121,17 +121,14 @@
       "majorCategoryId": 1,
       "name": "plumber",
       "id": "VI4xe01yK1Y"
+    },
+    {
+      "majorCategoryId": 4,
+      "name": "Formula",
+      "id": "KrCtUYgtz_k"
     }
   ],
   "expenses": [
-    {
-      "majorCategoryId": 1,
-      "minorCategoryId": "101",
-      "amount": 24000,
-      "date": "2026-09-06",
-      "description": "",
-      "id": "5H3WEJXkyXM"
-    },
     {
       "majorCategoryId": 1,
       "minorCategoryId": "103",
@@ -142,19 +139,27 @@
     },
     {
       "majorCategoryId": 1,
-      "minorCategoryId": "VI4xe01yK1Y",
-      "amount": 600,
-      "date": "2026-09-06",
-      "description": "",
-      "id": "Y2avFTvqSLA"
-    },
-    {
-      "majorCategoryId": 1,
       "minorCategoryId": "IxOBlJQhjEk",
       "amount": 4555,
       "date": "2026-09-06",
       "description": "",
       "id": "8cfvCgjF3H8"
+    },
+    {
+      "majorCategoryId": 4,
+      "minorCategoryId": "402",
+      "amount": 150,
+      "date": "2026-09-07",
+      "description": "",
+      "id": "ejqKXVSEvkM"
+    },
+    {
+      "majorCategoryId": 4,
+      "minorCategoryId": "KrCtUYgtz_k",
+      "amount": 715,
+      "date": "2026-09-07",
+      "description": "",
+      "id": "46M6Xo0M_Q0"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -8,7 +8,7 @@
         <div class="category-amount">₹ {{ item.amount | number:'1.0-0' }}</div><div class="category-meta">{{ item.count }} expense{{ item.count === 1 ? '' : 's' }} <span>›</span></div>
       </a>
     }
-    <button class="category-card create-card" type="button" (click)="showMajorModal = true"><div class="plus-circle">+</div><strong>Create</strong><span>New Category</span></button>
+    <!-- <button class="category-card create-card" type="button" (click)="showMajorModal = true"><div class="plus-circle">+</div><strong>Create</strong><span>New Category</span></button> -->
   </div>
 
   <div class="dashboard-grid">
@@ -30,7 +30,40 @@
       @for (item of categoryTotals(); track item.category.id) {<div class="total-line"><div><i [class]="'dot ' + item.category.accent"></i>{{ item.category.name }}</div><strong>₹ {{ item.amount | number:'1.0-0' }}</strong><span>{{ item.percentage | number:'1.1-1' }}%</span></div>}
     </div></section>
   </div>
+  <section class="panel expenses-panel">
+  <div class="panel-title">
+    <span class="title-icon">₹</span>
+    <h2>Recent Expenses</h2>
+  </div>
 
+  @for (expense of monthExpenses(); track expense.id) {
+    <div class="expense-row">
+
+      <div class="expense-info">
+        <strong>{{ expense.description || 'Expense' }}</strong>
+        <span>{{ expense.date }}</span>
+      </div>
+
+      <strong class="expense-amount">
+        ₹ {{ expense.amount | number:'1.0-0' }}
+      </strong>
+
+      <button
+        type="button"
+        class="delete-btn"
+        (click)="deleteExpense(expense)">
+        Delete
+      </button>
+
+    </div>
+  }
+
+  @if (monthExpenses().length === 0) {
+    <div class="empty-expenses">
+      No expenses for {{ monthLabel() }}.
+    </div>
+  }
+</section>
   <div class="phase2-banner"><div class="phase2-icon">◷</div><div><strong>More Insights Coming in Phase 2</strong><p>Recent expenses list and expense distribution charts will be available in Phase 2.</p><em>For now, focus on adding your expenses and tracking your totals.</em></div></div>
 </section>
 
